@@ -203,7 +203,5 @@ export default async ({
         }
     }
 
-    console.log('extensions', extensions);
-
     return extensions
 }
