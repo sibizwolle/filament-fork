@@ -36,6 +36,8 @@ import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 
 import getMergeTagSuggestion from './merge-tag-suggestion.js'
+import Mention from './extension-mention.js'
+import getMentionSuggestion from './mention-suggestion.js'
 
 export default async ({
     acceptedFileTypes,
@@ -50,6 +52,9 @@ export default async ({
     maxFileSizeValidationMessage,
     mergeTags,
     noMergeTagSearchResultsMessage,
+    mentions,
+    getMentionSearchResultsUsing,
+    getMentionLabelUsing,
     placeholder,
     statePath,
     textColors,
@@ -110,7 +115,17 @@ export default async ({
                       }),
                       mergeTags,
                   }),
-              ]
+            ]
+            : []),
+        ...((mentions.length || typeof getMentionSearchResultsUsing === 'function')
+            ? [
+                Mention.configure({
+                    HTMLAttributes: { class: 'fi-fo-rich-editor-mention' },
+                    suggestions: mentions,
+                    getMentionSearchResultsUsing,
+                    getMentionLabelUsing
+                })
+            ]
             : []),
         OrderedList,
         Paragraph,
@@ -179,6 +194,8 @@ export default async ({
             extensions.push(customExtension)
         }
     }
+
+    console.log('extensions', extensions);
 
     return extensions
 }
