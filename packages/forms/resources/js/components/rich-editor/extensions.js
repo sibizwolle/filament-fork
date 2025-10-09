@@ -139,7 +139,7 @@ export default async ({
 
                 return 'Begin met schrijven...';
             },
-        })
+        }),
         TextColor.configure({
             textColors,
         }),
