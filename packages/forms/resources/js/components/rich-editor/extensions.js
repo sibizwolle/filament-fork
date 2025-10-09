@@ -130,8 +130,16 @@ export default async ({
         OrderedList,
         Paragraph,
         Placeholder.configure({
-            placeholder,
-        }),
+            emptyNodeClass: 'tiptap-multiple-placeholders',
+            showOnlyCurrent: false,
+            placeholder: ({ node }) => {
+                if (node?.type?.name === 'title') {
+                    return 'Vul een titel in';
+                }
+
+                return 'Begin met schrijven...';
+            },
+        })
         TextColor.configure({
             textColors,
         }),
